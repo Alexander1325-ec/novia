@@ -26,7 +26,7 @@
     }
 
     .character {
-      width: var(--character-size, 45vmin);
+      width: var(--character-size, 50vmin);
       opacity: 0;
       transform: translateY(20vmin);
       animation: slideIn 1s ease-out forwards;
@@ -59,9 +59,8 @@
     .options {
       position: absolute;
       left: 20%;
-      transform: translateX(0);
       top: 50%;
-      transform: translateY(-50%);
+      transform: translate(-20%, -50%); /* Más a la izquierda */
       text-align: center;
     }
 
@@ -91,22 +90,21 @@
     }
 
     .message {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(80%, -50%); /* mueve más a la derecha */
-  width: 30vmin;
-  font-size: 4vmin;
-  color: #ff9a8b;
-  text-shadow: 0 0 5px rgba(255, 154, 139, 0.8);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  background: linear-gradient(135deg, rgba(255, 111, 97, 0.2), rgba(255, 154, 139, 0.4));
-  padding: 2vmin;
-  border-radius: 15px;
-  box-shadow: 0 0 10px rgba(255, 111, 97, 0.3);
-}
-
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(80%, -50%); /* Más a la derecha */
+      width: 30vmin;
+      font-size: 4vmin;
+      color: #ff9a8b;
+      text-shadow: 0 0 5px rgba(255, 154, 139, 0.8);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      background: linear-gradient(135deg, rgba(255, 111, 97, 0.2), rgba(255, 154, 139, 0.4));
+      padding: 2vmin;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(255, 111, 97, 0.3);
+    }
 
     .love-text {
       margin-top: 5vmin;
@@ -130,21 +128,35 @@
     <div class="heart heart-2">❤️</div>
     <div class="heart heart-3">❤️</div>
   </div>
+
   <div class="options">
-    <div class="question">¿Aceptas ser mi Novia?</div>
+    <div class="question">¿Aceptas ser mi novia?</div>
     <button class="button yes-button" onclick="accept()">Sí</button>
     <button class="button no-button" id="noButton">No</button>
   </div>
-  <div class="message" id="message">Eres el amor de mi vida no sabes cuanto te amo mi pequeñita hermosa, 'te agradezco por llegar a mi vida' te voy hacer feliz no lo dudes</div>
+
+  <div class="message" id="message">
+    Eres el amor de mi vida, no sabes cuánto te amo mi pequeñita hermosa, 'te agradezco por llegar a mi vida' te voy a hacer feliz, no lo dudes.
+  </div>
+
   <div class="love-text">I love you my girl</div>
+
   <audio id="loveSong" loop>
     <source src="music.mp3" type="audio/mpeg">
     Tu navegador no soporta el elemento de audio.
   </audio>
+
   <script>
     const noButton = document.getElementById('noButton');
     const message = document.getElementById('message');
     const audio = document.getElementById('loveSong');
+
+    // Reproducir al cargar (si el navegador lo permite)
+    window.onload = () => {
+      audio.play().catch(err => {
+        console.log('Autoplay bloqueado. El usuario debe interactuar primero.', err);
+      });
+    };
 
     noButton.addEventListener('mouseover', () => {
       const maxX = window.innerWidth - noButton.offsetWidth - 10;
@@ -168,7 +180,7 @@
 
     function accept() {
       message.style.opacity = 1;
-      noButton.style.display = 'none'; // Oculta el botón "No" al presionar "Sí"
+      noButton.style.display = 'none'; // Oculta el botón "No"
       if (audio.paused) {
         audio.play().catch(error => {
           console.log('Error al reproducir el audio:', error);
