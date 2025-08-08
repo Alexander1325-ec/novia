@@ -79,13 +79,14 @@
       font-family: 'Caveat', cursive;
       font-size: 5vmin;
       padding: 1.5vmin 3vmin;
-      margin: 1vmin;
+      margin: 1.5vmin;
       border: 2px solid #ff9a8b;
       border-radius: 10px;
       background-color: rgba(255, 255, 255, 0.2);
       color: #ff9a8b;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      position: relative;
     }
 
     .button:hover {
@@ -120,8 +121,19 @@
     }
 
     @media (max-width: 600px) {
+      .container {
+        padding: 0 2vmin;
+      }
+
+      .character {
+        width: 90%;
+      }
+
       .button {
         font-size: 6vmin;
+        display: block;
+        width: 90%;
+        margin: 2vmin auto;
       }
 
       .question, .message, .love-text {
@@ -185,8 +197,6 @@
       message.style.opacity = 1;
       loveText.style.opacity = 1;
       noButton.style.display = 'none';
-
-      // Reproduce solo al aceptar
       audio.play().catch(err => {
         console.log('Autoplay bloqueado:', err);
       });
