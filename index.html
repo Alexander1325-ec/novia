@@ -6,6 +6,12 @@
   <title>Amor con Corazones</title>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       display: flex;
       flex-direction: column;
@@ -16,17 +22,19 @@
       font-family: 'Caveat', cursive;
       overflow: hidden;
       position: relative;
+      padding: 2vmin;
     }
 
     .container {
       text-align: center;
       position: relative;
-      height: 60vmin;
-      width: 80vmin;
+      width: 100%;
+      max-width: 600px;
     }
 
     .character {
-      width: var(--character-size, 50vmin);
+      width: 80%;
+      max-width: 300px;
       opacity: 0;
       transform: translateY(20vmin);
       animation: slideIn 1s ease-out forwards;
@@ -57,24 +65,21 @@
     }
 
     .options {
-      position: absolute;
-      left: 20%;
-      top: 50%;
-      transform: translate(-20%, -50%); /* Más a la izquierda */
+      margin-top: 4vmin;
       text-align: center;
     }
 
     .question {
-      font-size: 4vmin;
+      font-size: 6vmin;
       color: #ffffff;
       margin-bottom: 2vmin;
     }
 
     .button {
       font-family: 'Caveat', cursive;
-      font-size: 3.5vmin;
-      padding: 1vmin 2vmin;
-      margin: 1vmin 0;
+      font-size: 5vmin;
+      padding: 1.5vmin 3vmin;
+      margin: 1vmin;
       border: 2px solid #ff9a8b;
       border-radius: 10px;
       background-color: rgba(255, 255, 255, 0.2);
@@ -83,25 +88,19 @@
       transition: background-color 0.3s ease;
     }
 
-    .button:hover { background-color: rgba(255, 255, 255, 0.4); }
-
-    .no-button {
-      position: relative;
+    .button:hover {
+      background-color: rgba(255, 255, 255, 0.4);
     }
 
     .message {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(80%, -50%); /* Más a la derecha */
-      width: 30vmin;
-      font-size: 4vmin;
+      margin-top: 4vmin;
+      font-size: 5vmin;
       color: #ff9a8b;
       text-shadow: 0 0 5px rgba(255, 154, 139, 0.8);
       opacity: 0;
       transition: opacity 0.5s ease;
       background: linear-gradient(135deg, rgba(255, 111, 97, 0.2), rgba(255, 154, 139, 0.4));
-      padding: 2vmin;
+      padding: 3vmin;
       border-radius: 15px;
       box-shadow: 0 0 10px rgba(255, 111, 97, 0.3);
     }
@@ -112,12 +111,22 @@
       color: #ff9a8b;
       text-shadow: 0 0 10px rgba(255, 154, 139, 0.8);
       opacity: 0;
-      animation: fadeInText 1s ease-in 6s forwards;
+      animation: fadeInText 1s ease-in 2s forwards;
     }
 
     @keyframes fadeInText {
       0% { opacity: 0; }
       100% { opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      .button {
+        font-size: 6vmin;
+      }
+
+      .question, .message, .love-text {
+        font-size: 6vmin;
+      }
     }
   </style>
 </head>
@@ -127,19 +136,19 @@
     <div class="heart heart-1">❤️</div>
     <div class="heart heart-2">❤️</div>
     <div class="heart heart-3">❤️</div>
-  </div>
 
-  <div class="options">
-    <div class="question">¿Aceptas ser mi novia?</div>
-    <button class="button yes-button" onclick="accept()">Sí</button>
-    <button class="button no-button" id="noButton">No</button>
-  </div>
+    <div class="options">
+      <div class="question">¿Aceptas ser mi novia?</div>
+      <button class="button yes-button" onclick="accept()">Sí</button>
+      <button class="button no-button" id="noButton">No</button>
+    </div>
 
-  <div class="message" id="message">
-    Eres el amor de mi vida, no sabes cuánto te amo mi pequeñita hermosa, 'te agradezco por llegar a mi vida' te voy a hacer feliz, no lo dudes.
-  </div>
+    <div class="message" id="message">
+      Eres el amor de mi vida, no sabes cuánto te amo mi pequeñita hermosa, te agradezco por llegar a mi vida. Te voy a hacer feliz, no lo dudes.
+    </div>
 
-  <div class="love-text">I love you my girl</div>
+    <div class="love-text" id="loveText">I love you my girl</div>
+  </div>
 
   <audio id="loveSong" loop>
     <source src="music.mp3" type="audio/mpeg">
@@ -150,13 +159,7 @@
     const noButton = document.getElementById('noButton');
     const message = document.getElementById('message');
     const audio = document.getElementById('loveSong');
-
-    // Reproducir al cargar (si el navegador lo permite)
-    window.onload = () => {
-      audio.play().catch(err => {
-        console.log('Autoplay bloqueado. El usuario debe interactuar primero.', err);
-      });
-    };
+    const loveText = document.getElementById('loveText');
 
     noButton.addEventListener('mouseover', () => {
       const maxX = window.innerWidth - noButton.offsetWidth - 10;
@@ -180,12 +183,13 @@
 
     function accept() {
       message.style.opacity = 1;
-      noButton.style.display = 'none'; // Oculta el botón "No"
-      if (audio.paused) {
-        audio.play().catch(error => {
-          console.log('Error al reproducir el audio:', error);
-        });
-      }
+      loveText.style.opacity = 1;
+      noButton.style.display = 'none';
+
+      // Reproduce solo al aceptar
+      audio.play().catch(err => {
+        console.log('Autoplay bloqueado:', err);
+      });
     }
   </script>
 </body>
