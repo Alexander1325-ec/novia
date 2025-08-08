@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amor con Corazones</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #1a0b2e 0%, #2c1e5a 100%);
+      font-family: 'Caveat', cursive;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container {
+      text-align: center;
+      position: relative;
+      height: 60vmin;
+      width: 80vmin;
+    }
+
+    .character {
+      width: var(--character-size, 45vmin);
+      opacity: 0;
+      transform: translateY(20vmin);
+      animation: slideIn 1s ease-out forwards;
+    }
+
+    .heart {
+      font-size: 0;
+      color: #ff6f61;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: floatAndGrow 2s ease-out forwards;
+    }
+
+    .heart-1 { top: 20%; animation-delay: 1.5s; }
+    .heart-2 { top: 40%; animation-delay: 3s; }
+    .heart-3 { top: 60%; animation-delay: 4.5s; }
+
+    @keyframes slideIn {
+      0% { opacity: 0; transform: translateY(20vmin); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatAndGrow {
+      0% { font-size: 0; opacity: 0; transform: translateX(-50%) translateY(0); }
+      50% { font-size: 6vmin; opacity: 0.7; transform: translateX(-50%) translateY(-5vmin); }
+      100% { font-size: 8vmin; opacity: 1; transform: translateX(-50%) translateY(-10vmin); }
+    }
+
+    .options {
+      position: absolute;
+      left: 20%;
+      transform: translateX(0);
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+    }
+
+    .question {
+      font-size: 4vmin;
+      color: #ffffff;
+      margin-bottom: 2vmin;
+    }
+
+    .button {
+      font-family: 'Caveat', cursive;
+      font-size: 3.5vmin;
+      padding: 1vmin 2vmin;
+      margin: 1vmin 0;
+      border: 2px solid #ff9a8b;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #ff9a8b;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover { background-color: rgba(255, 255, 255, 0.4); }
+
+    .no-button {
+      position: relative;
+    }
+
+    .message {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(80%, -50%); /* mueve más a la derecha */
+  width: 30vmin;
+  font-size: 4vmin;
+  color: #ff9a8b;
+  text-shadow: 0 0 5px rgba(255, 154, 139, 0.8);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: linear-gradient(135deg, rgba(255, 111, 97, 0.2), rgba(255, 154, 139, 0.4));
+  padding: 2vmin;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(255, 111, 97, 0.3);
+}
+
+
+    .love-text {
+      margin-top: 5vmin;
+      font-size: 6vmin;
+      color: #ff9a8b;
+      text-shadow: 0 0 10px rgba(255, 154, 139, 0.8);
+      opacity: 0;
+      animation: fadeInText 1s ease-in 6s forwards;
+    }
+
+    @keyframes fadeInText {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="foto2.jpg" alt="Personaje tierno" class="character">
+    <div class="heart heart-1">❤️</div>
+    <div class="heart heart-2">❤️</div>
+    <div class="heart heart-3">❤️</div>
+  </div>
+  <div class="options">
+    <div class="question">¿Aceptas ser mi Novia?</div>
+    <button class="button yes-button" onclick="accept()">Sí</button>
+    <button class="button no-button" id="noButton">No</button>
+  </div>
+  <div class="message" id="message">Eres el amor de mi vida no sabes cuanto te amo mi pequeñita hermosa, 'te agradezco por llegar a mi vida' te voy hacer feliz no lo dudes</div>
+  <div class="love-text">I love you my girl</div>
+  <audio id="loveSong" loop>
+    <source src="music.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+  <script>
+    const noButton = document.getElementById('noButton');
+    const message = document.getElementById('message');
+    const audio = document.getElementById('loveSong');
+
+    noButton.addEventListener('mouseover', () => {
+      const maxX = window.innerWidth - noButton.offsetWidth - 10;
+      const maxY = window.innerHeight - noButton.offsetHeight - 10;
+      const newX = Math.floor(Math.random() * maxX);
+      const newY = Math.floor(Math.random() * maxY);
+      noButton.style.position = 'absolute';
+      noButton.style.left = `${newX}px`;
+      noButton.style.top = `${newY}px`;
+    });
+
+    noButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      const maxX = window.innerWidth - noButton.offsetWidth - 10;
+      const maxY = window.innerHeight - noButton.offsetHeight - 10;
+      const newX = Math.floor(Math.random() * maxX);
+      const newY = Math.floor(Math.random() * maxY);
+      noButton.style.left = `${newX}px`;
+      noButton.style.top = `${newY}px`;
+    });
+
+    function accept() {
+      message.style.opacity = 1;
+      noButton.style.display = 'none'; // Oculta el botón "No" al presionar "Sí"
+      if (audio.paused) {
+        audio.play().catch(error => {
+          console.log('Error al reproducir el audio:', error);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
